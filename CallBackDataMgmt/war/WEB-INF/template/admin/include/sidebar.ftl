@@ -39,7 +39,9 @@
 				<span class="menu-text">游戏列表</span>
 			</a>
 		</li>
-	</li>
+		
+		[#include "/admin/include/sidebar2.ftl"]
+		
 	</ul>
 	
 	<!-- #section:basics/sidebar.layout.minimize -->
