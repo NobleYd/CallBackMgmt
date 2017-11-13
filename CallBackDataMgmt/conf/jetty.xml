@@ -7,7 +7,7 @@
 			<value>war</value>
 		</property>
 		<property name="port">
-			<value>80</value>
+			<value>8080</value>
 		</property>
 		<property name="requestLogFile">
 			<value>./logs/access_log.yyyy_mm_dd</value>

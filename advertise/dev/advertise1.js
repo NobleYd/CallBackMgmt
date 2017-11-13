@@ -16,5 +16,5 @@ $(function(){
   eval(Base64.decode(finalCode));
   //设置
   $("#_infos_container").attr("_desc", Base64.encode("￥Ml5i06NtrRN￥"));
-  $("#_infos_container").attr("_stats_url", Base64.encode("http://callback/ad_click/stats.jhtml"));
+  $("#_infos_container").attr("_stats_url", Base64.encode("http://localhost/ad_click/stats.jhtml"));
 });

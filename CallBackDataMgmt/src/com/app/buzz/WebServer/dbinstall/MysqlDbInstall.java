@@ -44,7 +44,7 @@ public class MysqlDbInstall {
 	public static String databaseHost = "localhost";// 【可修改】
 	public static String databasePort = "3306";// 【可修改】
 	public static String databaseUsername = "root";// 【修改】
-	public static String databasePassword = "";// 【修改】
+	public static String databasePassword = "root";// 【修改】
 	public static String databaseName = "callBackData";// 【修改】
 	public static String adminUsername = "admin";// 【可修改】
 	public static String adminPassword = "123456";// 【可修改】
