@@ -39,6 +39,27 @@
 				<span class="menu-text">游戏列表</span>
 			</a>
 		</li>
+		<li class="[#if menu=="advertise"]active open[/#if]">
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-dashboard"></i>
+				<span class="menu-text">广告投放</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<ul class="submenu">
+				<li class="[#if subMenu=="advertise_site"]active open[/#if]">
+					<a href="${base}/ad_site/list.jhtml" >
+						<i class="menu-icon fa fa-dashboard"></i>
+						<span class="menu-text">投放站点列表</span>
+					</a>
+				</li>
+				<li class="[#if subMenu=="advertise_click"]active open[/#if]">
+					<a href="${base}/ad_click/list.jhtml" >
+						<i class="menu-icon fa fa-dashboard"></i>
+						<span class="menu-text">点击复制列表</span>
+					</a>
+				</li>
+			</ul>
+		</li>
 		
 		[#include "/admin/include/sidebar2.ftl"]
 		

@@ -19,7 +19,7 @@
 		<div class="main-container" id="main-container">
 			
 			<!-- {定义左侧菜单选中项 menu="《此处填写左侧大分类》" subMenu="《此处填写小分类》" } -->
-			[#assign menu="devGroup" subMenu="adSite" ]
+			[#assign menu="advertise" subMenu="advertise_site" ]
 			
 			<!-- 引入左侧菜单部分 -->
 			[#include "/admin/include/sidebar.ftl"]
