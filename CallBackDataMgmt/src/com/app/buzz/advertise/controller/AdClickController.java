@@ -50,6 +50,7 @@ public class AdClickController extends BaseController {
 		if (!isValid(adClick)) {
 			return ERROR_VIEW;
 		}
+		adClick.setIp(request.getRemoteAddr());
 		adClickService.save(adClick);
 		return "success";
 	}
