@@ -16,5 +16,9 @@ import com.app.service.BaseService;
  * @version 1.0
  */
 public interface AdSiteService extends BaseService<AdSite, Long>{
+
+	Long getIpCount(String id);
+
+	Long getClickCount(String id);
 	
 }

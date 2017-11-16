@@ -30,6 +30,8 @@ public class Upload extends BaseEntity {
 	/** 附近 */
 	private String attachment;
 
+	private String content;
+	
 	/** name get */
 	public String getName() {
 		return name;
@@ -49,5 +51,15 @@ public class Upload extends BaseEntity {
 	public void setAttachment(String attachment) {
 		this.attachment = attachment;
 	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	
 
 }

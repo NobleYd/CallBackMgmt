@@ -135,6 +135,12 @@
 											<li [#if page.searchProperty == "salesMan" ] class="active" [/#if] val="salesMan" >
 												<a href="javascript:;" >推广员</a>
 											</li>
+											<li [#if page.searchProperty == "ipCount" ] class="active" [/#if] val="ipCount" >
+												<a href="javascript:;" >IP数量</a>
+											</li>
+											<li [#if page.searchProperty == "clickCount" ] class="active" [/#if] val="clickCount" >
+												<a href="javascript:;" >复制数量</a>
+											</li>
 									    </ul>
 									</div>
 									<span class="input-icon pull-left">
@@ -196,6 +202,18 @@
 													</a>
 												</th>
 												<th>
+													<a href="javascript:;" class="sort" name="ipCount">
+														IP数量
+														<i class="glyphicon pull-right"></i>
+													</a>
+												</th>
+												<th>
+													<a href="javascript:;" class="sort" name="clickCount">
+														复制数量
+														<i class="glyphicon pull-right"></i>
+													</a>
+												</th>
+												<th>
 													<span>${message("admin.common.handle")}</span>
 												</th>
 											</tr>
@@ -227,6 +245,12 @@
 												<td>				
 													<span name="salesMan">${(adSite.salesMan)!}</span>
 												</td>
+												<td>				
+													<span name="salesMan">${(adSite.ipCount)!}</span>
+												</td>
+												<td>				
+													<span name="salesMan">${(adSite.clickCount)!}</span>
+												</td>
 												<td>
 													<!-- 大型ui -->
 													<div class="hidden-sm hidden-xs btn-group">
@@ -237,6 +261,10 @@
 														<a href="javascript:void(0);" class="deleteButton btn btn-xs btn-danger" ids="${adSite.id}" >
 															<i class="ace-icon fa fa-trash-o bigger-120"></i>
 															<span>${message("admin.common.delete")}</span>
+														</a>
+														<a class="btn btn-xs btn-info" href="stats.jhtml?id=${adSite.id}" >
+															<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+															<span>统计IP复制数量</span>
 														</a>
 													</div>
 													<!-- 小型ui -->
@@ -259,6 +287,14 @@
 																		<span class="red">
 																			<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																			<span>${message("admin.common.delete")}</span>
+																		</span>
+																	</a>
+																</li>
+																<li>
+																	<a href="stats.jhtml?id=${adSite.id}" class="tooltip-success" data-rel="tooltip" title="Edit">
+																		<span class="blue">
+																			<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																			<span>统计IP复制数量</span>
 																		</span>
 																	</a>
 																</li>

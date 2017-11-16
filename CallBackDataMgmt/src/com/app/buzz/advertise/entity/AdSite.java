@@ -43,7 +43,8 @@ public class AdSite extends BaseEntity {
 	/** 推广员 */
 	private String salesMan;
 	
-
+	private Long ipCount = 0L;
+	private Long clickCount = 0L;
 	
 	
 	/** uniqueId get */
@@ -115,6 +116,22 @@ public class AdSite extends BaseEntity {
 	/** salesMan set */
 	public void setSalesMan(String salesMan){
 		this.salesMan = salesMan;
+	}
+
+	public Long getIpCount() {
+		return ipCount;
+	}
+
+	public void setIpCount(Long ipCount) {
+		this.ipCount = ipCount;
+	}
+
+	public Long getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(Long clickCount) {
+		this.clickCount = clickCount;
 	}
 	
 }

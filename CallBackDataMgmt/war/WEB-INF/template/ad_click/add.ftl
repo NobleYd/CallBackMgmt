@@ -79,27 +79,6 @@
 									    </ul>
 									    <div class="tab-content">
 									        <div id="base" class="tab-pane active">
-											
-												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="ip">
-														<span>用户IP</span>:
-													</label>
-													<div class="col-sm-9">
-														<div class="clearfix">
-															<input name="ip" type="text" class="col-xs-10 col-sm-5" />
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="mac">
-														<span>用户MAC</span>:
-													</label>
-													<div class="col-sm-9">
-														<div class="clearfix">
-															<input name="mac" type="text" class="col-xs-10 col-sm-5" />
-														</div>
-													</div>
-												</div>
 												<div class="form-group">
 													<label class="col-sm-3 control-label no-padding-right" for="siteUniqueId">
 														<span>网站识别号</span>:
@@ -110,6 +89,18 @@
 														</div>
 													</div>
 												</div>
+												
+												<div class="form-group">
+													<label class="col-sm-3 control-label no-padding-right" for="ip">
+														<span>用户IP</span>:
+													</label>
+													<div class="col-sm-9">
+														<div class="clearfix">
+															<input name="ip" type="text" class="col-xs-10 col-sm-5" />
+														</div>
+													</div>
+												</div>
+												
 												<div class="clearfix form-actions">
 												    <div class="col-sm-offset-3 col-sm-9">
 												    	<span class="input-icon">

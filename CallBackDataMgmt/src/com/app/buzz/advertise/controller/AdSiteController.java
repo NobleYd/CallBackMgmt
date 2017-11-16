@@ -166,4 +166,21 @@ public class AdSiteController extends BaseController {
 		return adSiteService.find(Filter.eq("uniqueId", uniqueId, false)) == null;
 	}
 
+	/**
+	 * stats
+	 */
+	@RequestMapping(value = "/stats", method = RequestMethod.GET)
+	public String stats(Long id, ModelMap model) {
+		AdSite adSite = adSiteService.find(id);
+		
+		Long ipCount = adSiteService.getIpCount(adSite.getUniqueId());
+		Long clickCount =adSiteService.getClickCount(adSite.getUniqueId());
+		adSite.setIpCount(ipCount);
+		adSite.setClickCount(clickCount);
+		
+		adSiteService.update(adSite);
+		return "redirect:list.jhtml";
+	}
+	
+	
 }

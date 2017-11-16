@@ -31,6 +31,16 @@ public class AdSiteServiceImpl extends BaseServiceImpl<AdSite, Long> implements 
 	public void setBaseDao(AdSiteDao adSiteDao) {
 		super.setBaseDao(adSiteDao);
 	}
+
+	@Override
+	public Long getIpCount(String id) {
+		return adSiteDao.getIpCount(id);
+	}
+
+	@Override
+	public Long getClickCount(String id) {
+		return adSiteDao.getClickCount(id);
+	}
 	
 
 }

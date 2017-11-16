@@ -6,18 +6,15 @@
 package com.app.buzz.callback.controller;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.app.FileInfo.FileType;
 import com.app.Filter;
 import com.app.Message;
 import com.app.Pageable;
-import com.app.FileInfo.FileType;
 import com.app.buzz.callback.entity.AdIndex;
 import com.app.buzz.callback.entity.CallBackData;
 import com.app.buzz.callback.entity.Upload;
@@ -82,6 +79,14 @@ public class UploadController extends BaseController {
 	public String add(ModelMap model) {
 		return viewPath + "/add";
 	}
+	
+	/**
+	 * 添加
+	 */
+	@RequestMapping(value = "/add2", method = RequestMethod.GET)
+	public String add2(ModelMap model) {
+		return viewPath + "/add2";
+	}
 
 	/**
 	 * 保存
@@ -108,18 +113,15 @@ public class UploadController extends BaseController {
 
 						// 做一个初始化
 						callBackData.setUsedGames("");
-
+						callBackData.setAd(upload.getName());
 						if (splits.length >= 1) {
-							callBackData.setAd(splits[0].trim());
+							callBackData.setUserName(splits[0].trim());
 						}
 						if (splits.length >= 2) {
-							callBackData.setUserName(splits[1].trim());
+							callBackData.setPassword(splits[1].trim());
 						}
 						if (splits.length >= 3) {
-							callBackData.setPassword(splits[2].trim());
-						}
-						if (splits.length >= 4) {
-							callBackData.setRemark(splits[3].trim());
+							callBackData.setRemark(splits[2].trim());
 						}
 
 						// 首先根据ad、日期查询adIndex的最大值
@@ -164,6 +166,65 @@ public class UploadController extends BaseController {
 		}
 		uploadService.save(upload);
 
+		return "redirect:list.jhtml";
+	}
+	
+	/**
+	 * 保存
+	 */
+	@RequestMapping(value = "/save2", method = RequestMethod.POST)
+	public String save2(Upload upload, RedirectAttributes redirectAttributes) {
+		if (!isValid(upload)) {
+			return ERROR_VIEW;
+		}
+		String content = upload.getContent();
+		if (content != null && !content.isEmpty()) {
+			String[] lines = content.split("\n");
+			for(String line:lines) {
+				if(line!=null&&!line.trim().isEmpty()) {
+					String[] splits = line.trim().split(",");
+					CallBackData callBackData = new CallBackData();
+
+					// 做一个初始化
+					callBackData.setUsedGames("");
+
+					if (splits.length >= 1) {
+						callBackData.setAd(splits[0].trim());
+					}
+					if (splits.length >= 2) {
+						callBackData.setUserName(splits[1].trim());
+					}
+					if (splits.length >= 3) {
+						callBackData.setPassword(splits[2].trim());
+					}
+					if (splits.length >= 4) {
+						callBackData.setRemark(splits[3].trim());
+					}
+
+					// 首先根据ad、日期查询adIndex的最大值
+					Long dayNumber = Long.parseLong(sdf.format(new Date()));
+					AdIndex adIndex = adIndexService.find(Filter.eq("ad", callBackData.getAd(), false), Filter.eq("dayNumber", dayNumber, false));
+
+					if (adIndex == null) {
+						adIndex = new AdIndex();
+						adIndex.setAd(callBackData.getAd());
+						adIndex.setDayNumber(dayNumber);
+						adIndex.setIndexNumber(1L);
+						adIndexService.save(adIndex);
+					} else {
+						// 自加1
+						adIndex.setIndexNumber(adIndex.getIndexNumber() + 1);
+						// 更新到数据库
+						adIndexService.update(adIndex);
+					}
+					callBackData.setAdIndex(adIndex.getIndexNumber());
+
+					callBackData.setUploadName(upload.getName());
+					callBackDataService.save(callBackData);
+				}
+			}
+		}
+		uploadService.save(upload);
 		return "redirect:list.jhtml";
 	}
 

@@ -79,7 +79,11 @@
 								<div class="btn-group btn-corner">
 									<a href="add.jhtml" class="btn btn-info btn-sm">
 										<i class="glyphicon glyphicon-plus"></i>
-										<span>${message("admin.common.add")}</span>
+										<span>文件上传</span>
+									</a>
+									<a href="add2.jhtml" class="btn btn-info btn-sm">
+										<i class="glyphicon glyphicon-plus"></i>
+										<span>文本上传</span>
 									</a>
 								    <a href="javascript:;" id="refreshButton" class="btn btn-success btn-sm">
 								        <i class="glyphicon glyphicon-refresh"></i>
@@ -144,7 +148,7 @@
 													</a>
 												</th>
 												<th>
-													<span name="attachment">文件</span>
+													<span>文件/内容</span>
 												</th>
 												<th>
 													<span>${message("admin.common.handle")}</span>
@@ -158,7 +162,11 @@
 													<span name="name">${(content.name)!}</span>
 												</td>
 												<td>
+													[#if content.attachment??]
 													<a title="attachment" href="${(content.attachment)!}" target="_blank" >查看/下载</a>	
+													[#else]
+													${content.content!}
+													[/#if]
 												</td>
 												<td>
 													<!-- 大型ui -->

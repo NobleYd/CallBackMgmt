@@ -60,9 +60,9 @@
 				</li>
 			</ul>
 		</li>
-		
+		[#--
 		[#include "/admin/include/sidebar2.ftl"]
-		
+		--]
 	</ul>
 	
 	<!-- #section:basics/sidebar.layout.minimize -->

@@ -120,14 +120,11 @@
 									        <i class="ace-icon fa fa-angle-down"></i>
 									    </a>
 									    <ul id="searchPropertyOption" class="dropdown-menu dropdown-info">
-											<li [#if page.searchProperty == "ip" ] class="active" [/#if] val="ip" >
-												<a href="javascript:;" >用户IP</a>
-											</li>
-											<li [#if page.searchProperty == "mac" ] class="active" [/#if] val="mac" >
-												<a href="javascript:;" >用户MAC</a>
-											</li>
 											<li [#if page.searchProperty == "siteUniqueId" ] class="active" [/#if] val="siteUniqueId" >
 												<a href="javascript:;" >网站识别号</a>
+											</li>
+											<li [#if page.searchProperty == "ip" ] class="active" [/#if] val="ip" >
+												<a href="javascript:;" >用户IP</a>
 											</li>
 									    </ul>
 									</div>
@@ -154,20 +151,14 @@
 													</label>
 												</th>
 												<th>
-													<a href="javascript:;" class="sort" name="ip">
-														用户IP
-														<i class="glyphicon pull-right"></i>
-													</a>
-												</th>
-												<th>
-													<a href="javascript:;" class="sort" name="mac">
-														用户MAC
-														<i class="glyphicon pull-right"></i>
-													</a>
-												</th>
-												<th>
 													<a href="javascript:;" class="sort" name="siteUniqueId">
 														网站识别号
+														<i class="glyphicon pull-right"></i>
+													</a>
+												</th>
+												<th>
+													<a href="javascript:;" class="sort" name="ip">
+														用户IP
 														<i class="glyphicon pull-right"></i>
 													</a>
 												</th>
@@ -186,13 +177,10 @@
 													</label>
 												</td>
 												<td>				
-													<span name="ip">${(adClick.ip)!}</span>
-												</td>
-												<td>				
-													<span name="mac">${(adClick.mac)!}</span>
-												</td>
-												<td>				
 													<span name="siteUniqueId">${(adClick.siteUniqueId)!}</span>
+												</td>
+												<td>				
+													<span name="ip">${(adClick.ip)!}</span>
 												</td>
 												<td>
 													<!-- 大型ui -->

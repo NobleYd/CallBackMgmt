@@ -20,4 +20,14 @@ import com.app.dao.impl.BaseDaoImpl;
  */
 @Repository("adSiteDao")
 public class AdSiteDaoImpl extends BaseDaoImpl<AdSite, Long> implements AdSiteDao {
+
+	@Override
+	public Long getIpCount(String id) {
+		return (Long) this.entityManager.createQuery("select count(distinct t.ip) from AdClick t where t.siteUniqueId = :id").setParameter("id",id).getSingleResult();
+	}
+
+	@Override
+	public Long getClickCount(String id) {
+		return (Long) this.entityManager.createQuery("select count(*) from AdClick t where t.siteUniqueId = :id").setParameter("id",id).getSingleResult();
+	}
 }

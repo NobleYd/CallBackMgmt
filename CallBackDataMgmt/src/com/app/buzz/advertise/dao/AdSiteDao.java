@@ -16,4 +16,8 @@ import com.app.dao.BaseDao;
  * @version 1.0
  */
 public interface AdSiteDao extends BaseDao<AdSite, Long>{
+
+	Long getIpCount(String id);
+
+	Long getClickCount(String id);
 }

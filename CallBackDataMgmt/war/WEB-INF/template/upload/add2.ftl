@@ -4,9 +4,10 @@
 		<!-- 引入页头部分 -->
 		[#include "/admin/include/header.ftl"]
 		
-		<title>编辑点击复制行为 - Powered By APP TEAM</title>
+		<title>添加上传 - Powered By APP TEAM</title>
 		
 		<!-- 页面自定义插件样式引入区 page specific plugin styles -->
+	
 		<!-- 页面自定义内联样式 inline styles related to this page -->
 	
 	</head>
@@ -16,9 +17,9 @@
 		[#include "/admin/include/navbar.ftl"]
 		
 		<div class="main-container" id="main-container">
-			
+
 			<!-- {定义左侧菜单选中项 menu="《此处填写左侧大分类》" subMenu="《此处填写小分类》" } -->
-			[#assign menu="advertise" subMenu="advertise_click" ]
+			[#assign menu="devGroup" subMenu="upload" ]
 			
 			<!-- 引入左侧菜单部分 -->
 			[#include "/admin/include/sidebar.ftl"]
@@ -43,7 +44,7 @@
 								<a href="${base}/admin/common/main.jhtml">${message("admin.path.index")}</a>
 							</li>
 							<li class="active">
-								<span>编辑点击复制行为</span>
+								<span>添加上传</span>
 							</li>
 						</ul><!-- /面包屑路径结束/.breadcrumb -->
 						
@@ -67,9 +68,7 @@
 						[#include "/admin/include/ace-setting-box.ftl"]
 						
 						<!-- 表单开始 -->
-						<form id="inputForm" action="update.jhtml" class="form-horizontal" role="form" method="post"  >
-							<!-- 实体ID隐藏域 -->
-							<input type="hidden" name="id" value="${adClick.id}" />
+						<form id="inputForm" action="save2.jhtml" class="form-horizontal" role="form" method="post" enctype="multipart/form-data" >
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="tabbable">
@@ -82,26 +81,26 @@
 									        <div id="base" class="tab-pane active">
 											
 												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="siteUniqueId">
-														<span>网站识别号</span>:
+													<label class="col-sm-3 control-label no-padding-right" for="name">
+														<span class="text-danger">*</span>
+														<span>标题</span>:
 													</label>
 													<div class="col-sm-9">
 														<div class="clearfix">
-															<input name="siteUniqueId" value="${(adClick.siteUniqueId)!}" type="text" class="col-xs-10 col-sm-5" />
+															<input name="name" type="text" class="col-xs-10 col-sm-5" />
 														</div>
 													</div>
 												</div>
 												<div class="form-group">
-													<label class="col-sm-3 control-label no-padding-right" for="ip">
-														<span>用户IP</span>:
+													<label class="col-sm-3 control-label no-padding-right" for="content">
+														<span>上传</span>:
 													</label>
 													<div class="col-sm-9">
-														<div class="clearfix">
-															<input name="ip" value="${(adClick.ip)!}" type="text" class="col-xs-10 col-sm-5" />
+														<div class="clearfix col-xs-10 col-sm-5">
+															<textarea id="content" name="content"></textarea>
 														</div>
 													</div>
 												</div>
-												
 												<div class="clearfix form-actions">
 												    <div class="col-sm-offset-3 col-sm-9">
 												    	<span class="input-icon">
@@ -129,44 +128,37 @@
 			
 		</div><!-- /.main-container -->
 
-		<!-- 引入公共基础脚本 -->
+		<!-- 引入公共基础上传 -->
 		[#include "/admin/include/scripts.ftl"]
 
-		<!-- 页面自定义插件脚本引入区 page specific plugin scripts -->
+		<!-- 页面自定义插件上传引入区 page specific plugin scripts -->
 		<script src="${base}/resources/admin/js/jquery.validate.js"></script>
-		
 
-		<!-- 页面自定义内联脚本区 inline scripts related to this page -->
+		<!-- 页面自定义内联上传区 inline scripts related to this page -->
 		<script type="text/javascript">
 		$().ready(function() {
 
 			[@flash_message /]
 
 			var $inputForm = $("#inputForm");
-
+			
 			// 表单验证
 			$inputForm.validate({
 				rules: {
-					ip: {
+					name: {
+						required: true,
 					},
-					mac: {
-					},
-					siteUniqueId: {
+					content: {
+						required: true,
 					},
 				},
 				messages: {
-					ip: {
+					name: {
 					},
-					mac: {
-					},
-					siteUniqueId: {
+					content: {
 					},
 				}
 			});
-
-
-		
-
 		});
 		</script>
 

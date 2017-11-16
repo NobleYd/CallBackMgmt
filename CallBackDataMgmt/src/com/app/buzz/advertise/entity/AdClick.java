@@ -27,9 +27,6 @@ public class AdClick extends BaseEntity {
 	/** 用户IP */
 	private String ip;
 
-	/** 用户MAC */
-	private String mac;
-
 	/** 网站识别号 */
 	private String siteUniqueId;
 
@@ -42,17 +39,7 @@ public class AdClick extends BaseEntity {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-
-	/** mac get */
-	public String getMac() {
-		return mac;
-	}
-
-	/** mac set */
-	public void setMac(String mac) {
-		this.mac = mac;
-	}
-
+	
 	/** siteUniqueId get */
 	public String getSiteUniqueId() {
 		return siteUniqueId;
