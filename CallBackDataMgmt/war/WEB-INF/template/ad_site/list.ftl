@@ -135,12 +135,6 @@
 											<li [#if page.searchProperty == "salesMan" ] class="active" [/#if] val="salesMan" >
 												<a href="javascript:;" >推广员</a>
 											</li>
-											<li [#if page.searchProperty == "ipCount" ] class="active" [/#if] val="ipCount" >
-												<a href="javascript:;" >IP数量</a>
-											</li>
-											<li [#if page.searchProperty == "clickCount" ] class="active" [/#if] val="clickCount" >
-												<a href="javascript:;" >复制数量</a>
-											</li>
 									    </ul>
 									</div>
 									<span class="input-icon pull-left">
@@ -203,13 +197,25 @@
 												</th>
 												<th>
 													<a href="javascript:;" class="sort" name="ipCount">
-														IP数量
+														IP（总）
 														<i class="glyphicon pull-right"></i>
 													</a>
 												</th>
 												<th>
 													<a href="javascript:;" class="sort" name="clickCount">
-														复制数量
+														点击（总）
+														<i class="glyphicon pull-right"></i>
+													</a>
+												</th>
+												<th>
+													<a href="javascript:;" class="sort" name="todayIpCount">
+														IP（今日）
+														<i class="glyphicon pull-right"></i>
+													</a>
+												</th>
+												<th>
+													<a href="javascript:;" class="sort" name="todayClickCount">
+														点击（今日）
 														<i class="glyphicon pull-right"></i>
 													</a>
 												</th>
@@ -250,6 +256,12 @@
 												</td>
 												<td>				
 													<span name="salesMan">${(adSite.clickCount)!}</span>
+												</td>
+												<td>				
+													<span name="salesMan">${(adSite.todayIpCount)!}</span>
+												</td>
+												<td>				
+													<span name="salesMan">${(adSite.todayClickCount)!}</span>
 												</td>
 												<td>
 													<!-- 大型ui -->

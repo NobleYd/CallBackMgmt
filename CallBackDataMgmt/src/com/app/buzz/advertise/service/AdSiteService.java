@@ -5,6 +5,8 @@
  */
 package com.app.buzz.advertise.service;
 
+import java.util.Date;
+
 import com.app.buzz.advertise.entity.AdSite;
 import com.app.service.BaseService;
 
@@ -20,5 +22,9 @@ public interface AdSiteService extends BaseService<AdSite, Long>{
 	Long getIpCount(String id);
 
 	Long getClickCount(String id);
+
+	Long getIpCount(String uniqueId, Date start, Date end);
+
+	Long getClickCount(String uniqueId, Date start, Date end);
 	
 }

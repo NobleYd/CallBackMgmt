@@ -5,6 +5,8 @@
  */
 package com.app.buzz.advertise.service.impl;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -40,6 +42,16 @@ public class AdSiteServiceImpl extends BaseServiceImpl<AdSite, Long> implements 
 	@Override
 	public Long getClickCount(String id) {
 		return adSiteDao.getClickCount(id);
+	}
+
+	@Override
+	public Long getIpCount(String uniqueId, Date start, Date end) {
+		return adSiteDao.getIpCount(uniqueId,start,end);
+	}
+
+	@Override
+	public Long getClickCount(String uniqueId, Date start, Date end) {
+		return adSiteDao.getClickCount(uniqueId,start,end);
 	}
 	
 

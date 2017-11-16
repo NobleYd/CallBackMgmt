@@ -46,6 +46,8 @@ public class AdSite extends BaseEntity {
 	private Long ipCount = 0L;
 	private Long clickCount = 0L;
 	
+	private Long todayIpCount = 0L;
+	private Long todayClickCount = 0L;
 	
 	/** uniqueId get */
 	public String getUniqueId(){
@@ -133,5 +135,23 @@ public class AdSite extends BaseEntity {
 	public void setClickCount(Long clickCount) {
 		this.clickCount = clickCount;
 	}
+
+	public Long getTodayIpCount() {
+		return todayIpCount;
+	}
+
+	public void setTodayIpCount(Long todayIpCount) {
+		this.todayIpCount = todayIpCount;
+	}
+
+	public Long getTodayClickCount() {
+		return todayClickCount;
+	}
+
+	public void setTodayClickCount(Long todayClickCount) {
+		this.todayClickCount = todayClickCount;
+	}
+	
+	
 	
 }

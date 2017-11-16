@@ -5,6 +5,8 @@
  */
 package com.app.buzz.advertise.dao.impl;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Repository;
 
 import com.app.buzz.advertise.dao.AdSiteDao;
@@ -23,11 +25,27 @@ public class AdSiteDaoImpl extends BaseDaoImpl<AdSite, Long> implements AdSiteDa
 
 	@Override
 	public Long getIpCount(String id) {
-		return (Long) this.entityManager.createQuery("select count(distinct t.ip) from AdClick t where t.siteUniqueId = :id").setParameter("id",id).getSingleResult();
+		return (Long) this.entityManager
+				.createQuery("select count(distinct t.ip) from AdClick t where t.siteUniqueId = :id")
+				.setParameter("id", id).getSingleResult();
 	}
 
 	@Override
 	public Long getClickCount(String id) {
-		return (Long) this.entityManager.createQuery("select count(*) from AdClick t where t.siteUniqueId = :id").setParameter("id",id).getSingleResult();
+		return (Long) this.entityManager.createQuery("select count(*) from AdClick t where t.siteUniqueId = :id")
+				.setParameter("id", id).getSingleResult();
+	}
+
+	@Override
+	public Long getIpCount(String uniqueId, Date start, Date end) {
+		return (Long) this.entityManager
+				.createQuery("select count(distinct t.ip) from AdClick t where t.siteUniqueId = :id and t.createDate >= :start and t.createDate <= :end")
+				.setParameter("id", uniqueId).setParameter("start", start).setParameter("end", end).getSingleResult();
+	}
+
+	@Override
+	public Long getClickCount(String uniqueId, Date start, Date end) {
+		return (Long) this.entityManager.createQuery("select count(*) from AdClick t where t.siteUniqueId = :id and t.createDate >= :start and t.createDate <= :end")
+				.setParameter("id", uniqueId).setParameter("start", start).setParameter("end", end).getSingleResult();
 	}
 }

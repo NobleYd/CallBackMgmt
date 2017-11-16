@@ -7,6 +7,7 @@ package com.app.buzz.advertise.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -70,10 +71,10 @@ public class AdSiteController extends BaseController {
 		if (!isValid(adSite)) {
 			return ERROR_VIEW;
 		}
-//		if (adSite.getUniqueId() == null) {
-//			addFlashMessage(redirectAttributes, Message.error("网站唯一识别号是必填项哦！"));
-//			return "redirect:list.jhtml";
-//		}
+		// if (adSite.getUniqueId() == null) {
+		// addFlashMessage(redirectAttributes, Message.error("网站唯一识别号是必填项哦！"));
+		// return "redirect:list.jhtml";
+		// }
 		if (adSite.getName() == null) {
 			addFlashMessage(redirectAttributes, Message.error("网站名称是必填项哦！"));
 			return "redirect:list.jhtml";
@@ -121,10 +122,10 @@ public class AdSiteController extends BaseController {
 		if (!isValid(adSite)) {
 			return ERROR_VIEW;
 		}
-//		if (adSite.getUniqueId() == null) {
-//			addFlashMessage(redirectAttributes, Message.error("网站唯一识别号是必填项哦！"));
-//			return "redirect:list.jhtml";
-//		}
+		// if (adSite.getUniqueId() == null) {
+		// addFlashMessage(redirectAttributes, Message.error("网站唯一识别号是必填项哦！"));
+		// return "redirect:list.jhtml";
+		// }
 		if (adSite.getName() == null) {
 			addFlashMessage(redirectAttributes, Message.error("网站名称是必填项哦！"));
 			return "redirect:list.jhtml";
@@ -172,15 +173,28 @@ public class AdSiteController extends BaseController {
 	@RequestMapping(value = "/stats", method = RequestMethod.GET)
 	public String stats(Long id, ModelMap model) {
 		AdSite adSite = adSiteService.find(id);
-		
+
 		Long ipCount = adSiteService.getIpCount(adSite.getUniqueId());
-		Long clickCount =adSiteService.getClickCount(adSite.getUniqueId());
+		Long clickCount = adSiteService.getClickCount(adSite.getUniqueId());
 		adSite.setIpCount(ipCount);
 		adSite.setClickCount(clickCount);
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		Date start = calendar.getTime();
+		calendar.set(Calendar.HOUR_OF_DAY, 23);
+		calendar.set(Calendar.MINUTE, 59);
+		calendar.set(Calendar.SECOND, 59);
+		Date end = calendar.getTime();
+		Long todayIpCount = adSiteService.getIpCount(adSite.getUniqueId(), start, end);
+		Long todayClickCount = adSiteService.getClickCount(adSite.getUniqueId(), start, end);
+		adSite.setTodayIpCount(todayIpCount);
+		adSite.setTodayClickCount(todayClickCount);
 		
 		adSiteService.update(adSite);
 		return "redirect:list.jhtml";
 	}
-	
-	
+
 }
