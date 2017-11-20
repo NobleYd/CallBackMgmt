@@ -236,8 +236,8 @@
 												<td>				
 													<span name="uniqueId">${(adSite.uniqueId)!}</span>
 												</td>
-												<td>				
-													<span name="name">${(adSite.name)!}</span>
+												<td>	
+													<a href="${adSite.name}" target="_blank" ><span name="name">${(adSite.name)!}</span></a>
 												</td>
 												<td>				
 													<span name="author">${(adSite.author)!}</span>

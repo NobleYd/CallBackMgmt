@@ -5,7 +5,7 @@
 	<!-- 网站名称（必填） -->
 	<setting name="siteName" value="appAPP" />
 	<!-- 网址（必填） -->
-	<setting name="siteUrl" value="http://localhost" />
+	<setting name="siteUrl" value="/" />
 
 	<!-- 网站Logo（必填） -->
 	<setting name="logo" value="/upload/image/logo.gif" />
@@ -61,14 +61,16 @@
 	<setting name="mediaUploadPath" value="/upload/media/${.now?string('yyyyMM')}/" />
 	<!-- 文件上传路径（必填） -->
 	<setting name="fileUploadPath" value="/upload/file/${.now?string('yyyyMM')}/" />
+	
+	<setting name="gameStateUploadPath" value="/upload/gamestate/${.now?string('yyyyMMdd')}/" />
 
 	<!-- ========================================邮件设置======================================== -->
 
-	<setting name="smtpFromMail" value="iamyidan@163.com" />
-	<setting name="smtpHost" value="smtp.163.com" />
-	<setting name="smtpPort" value="25" />
-	<setting name="smtpUsername" value="iamyidan@163.com" />
-	<setting name="smtpPassword" value="SHOULING" />
+	<setting name="smtpFromMail" value="" />
+	<setting name="smtpHost" value="" />
+	<setting name="smtpPort" value="" />
+	<setting name="smtpUsername" value="" />
+	<setting name="smtpPassword" value="" />
 
 	<!-- ========================================微信设置======================================== -->
 	<!-- 是否开启微信功能 -->

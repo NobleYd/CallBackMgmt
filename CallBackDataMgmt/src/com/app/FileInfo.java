@@ -30,7 +30,10 @@ public class FileInfo {
 		media,
 
 		/** 文件 */
-		file
+		file,
+		
+		/** 游戏状态 */
+		gamestate
 	}
 
 	/**

@@ -17,16 +17,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
-import com.app.FileInfo;
-import com.app.FileInfo.FileType;
-import com.app.FileInfo.OrderType;
-import com.app.Setting;
-import com.app.plugin.StoragePlugin;
-import com.app.service.FileService;
-import com.app.service.PluginService;
-import com.app.util.FreemarkerUtils;
-import com.app.util.SettingUtils;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -36,6 +26,16 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.app.FileInfo;
+import com.app.FileInfo.FileType;
+import com.app.FileInfo.OrderType;
+import com.app.Setting;
+import com.app.plugin.StoragePlugin;
+import com.app.service.FileService;
+import com.app.service.PluginService;
+import com.app.util.FreemarkerUtils;
+import com.app.util.SettingUtils;
 
 /**
  * Service - 文件
@@ -118,6 +118,8 @@ public class FileServiceImpl implements FileService, ServletContextAware {
 			uploadPath = setting.getMediaUploadPath();
 		} else if (fileType == FileType.file) {
 			uploadPath = setting.getFileUploadPath();
+		} else if (fileType == FileType.gamestate) {
+			uploadPath = setting.getGameStateUploadPath();
 		} else {
 			uploadPath = setting.getImageUploadPath();
 		}

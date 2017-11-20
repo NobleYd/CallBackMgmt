@@ -178,6 +178,9 @@ public class Setting implements Serializable {
 
 	/** 文件上传路径 */
 	private String fileUploadPath;
+	
+	/** 文件上传路径 */
+	private String gameStateUploadPath;
 
 	// --------------------------smtp设置
 
@@ -802,6 +805,36 @@ public class Setting implements Serializable {
 		this.fileUploadPath = fileUploadPath;
 	}
 
+	
+	/**
+	 * 获取文件上传路径
+	 * 
+	 * @return 文件上传路径
+	 */
+	@NotEmpty
+	@Length(max = 200)
+	public String getGameStateUploadPath() {
+		return gameStateUploadPath;
+	}
+
+	/**
+	 * 设置文件上传路径
+	 * 
+	 * @param fileUploadPath
+	 *            文件上传路径
+	 */
+	public void setGameStateUploadPath(String gameStateUploadPath) {
+		if (gameStateUploadPath != null) {
+			if (!gameStateUploadPath.startsWith("/")) {
+				gameStateUploadPath = "/" + gameStateUploadPath;
+			}
+			if (!gameStateUploadPath.endsWith("/")) {
+				gameStateUploadPath += "/";
+			}
+		}
+		this.gameStateUploadPath = gameStateUploadPath;
+	}
+	
 	/**
 	 * 获取是否开启开发模式
 	 * 

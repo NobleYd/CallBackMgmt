@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.app.Filter;
 import com.app.Message;
 import com.app.Pageable;
-import com.app.buzz.callback.entity.CallBackData;
 import com.app.buzz.callback.entity.RemarkUpdate;
 import com.app.buzz.callback.service.CallBackDataService;
 import com.app.buzz.callback.service.RemarkUpdateService;

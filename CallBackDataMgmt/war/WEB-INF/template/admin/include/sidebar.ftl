@@ -60,6 +60,12 @@
 				</li>
 			</ul>
 		</li>
+		<li class="[#if subMenu=="gameState"]active open[/#if]">
+			<a href="${base}/game_state/list.jhtml" >
+				<i class="menu-icon fa fa-dashboard"></i>
+				<span class="menu-text">游戏状态</span>
+			</a>
+		</li>
 		[#--
 		[#include "/admin/include/sidebar2.ftl"]
 		--]
