@@ -25,6 +25,6 @@ public class GameStateDaoImpl extends BaseDaoImpl<GameState, Long> implements Ga
 
 	@Override
 	public List<String> getGameList() {
-		return this.entityManager.createNamedQuery("select distinct(t.gameName) from GameState t").getResultList();
+		return this.entityManager.createQuery("select distinct(t.gameName) from GameState t order by t.gameName").getResultList();
 	}
 }

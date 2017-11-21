@@ -37,6 +37,9 @@
 								        <i class="glyphicon glyphicon-refresh"></i>
 								        <span>${message("admin.common.refresh")}</span>
 								    </a>
+								    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								    日期查询：<input type="text" id="searchDate" name="searchDate" value="[#if searchDate?? ]${(searchDate?string('yyyy-MM-dd'))!''}[/#if]" class="text Wdate" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'});" />
+								    
 								</div>
 							
 								<!-- 列表搜索 -->
@@ -50,7 +53,7 @@
 												<a href="javascript:;" >游戏名称</a>
 											</li>
 											<li [#if page.searchProperty == "title" ] class="active" [/#if] val="title" >
-												<a href="javascript:;" >账号唯一标识</a>
+												<a href="javascript:;" >账号密码</a>
 											</li>
 									    </ul>
 									</div>
@@ -71,22 +74,16 @@
 										<thead>
 											<tr>
 												<th>
-													<span name="gameName">游戏名称</span>
+													<span name="title">账号密码</span>
 												</th>
 												<th>
-													<span name="title">账号唯一标识</span>
-												</th>
-												<th>
-													<span name="picture">图片</span>
+													<span name="picture">游戏截图</span>
 												</th>
 											</tr>
 										</thead>
 										<tbody>
 										[#list contents as gameState ]
 											<tr>
-												<td>				
-													<span name="gameName">${(gameState.gameName)!}</span>
-												</td>
 												<td>				
 													<span name="title">${(gameState.title)!}</span>
 												</td>
@@ -99,7 +96,7 @@
 													 </tr>
 													 <tr>
 														[#list gameState.pictures as obj]
-														<td><img width="50px" height="50px" src="${(obj[0])!}" title="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" alt="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" /></td>
+														<td>&nbsp;<img width="200px" height="200px" src="${(obj[0])!}" title="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" alt="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" />&nbsp;</td>
 														[/#list]													 
 													 </tr>
 													</table>
@@ -126,6 +123,7 @@
 
 		<!-- 页面自定义插件脚本引入区 page specific plugin scripts -->
 		<script type="text/javascript" src="${base}/resources/admin/js/list.js"></script>
+		<script type="text/javascript" src="${base}/resources/admin/datePicker/WdatePicker.js"></script>
 		
 		<!-- 页面自定义内联脚本区 inline scripts related to this page -->
 		<script type="text/javascript">

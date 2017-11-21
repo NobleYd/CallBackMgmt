@@ -18,7 +18,7 @@
 		<div class="main-container" id="main-container">
 			
 			<!-- {定义左侧菜单选中项 menu="《此处填写左侧大分类》" subMenu="《此处填写小分类》" } -->
-			[#assign menu="gameStateMenu" subMenu="gameState" ]
+			[#assign menu="gameStateMenu" subMenu="gameList" ]
 			
 			<!-- 引入左侧菜单部分 -->
 			[#include "/admin/include/sidebar.ftl"]
@@ -43,22 +43,9 @@
 								<a href="${base}/admin/common/main.jhtml">${message("admin.path.index")}</a>
 							</li>
 							<li class="active">
-								<span>游戏状态列表</span>
-								<span>(${message("admin.page.total", page.total)})</span>
+								<span>游戏列表</span>
 							</li>
 						</ul><!-- /面包屑路径结束/.breadcrumb -->
-						
-						<!-- 全局搜索 注释掉（暂不支持）。
-                        <div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div>
-                        -->
-                        
 					</div><!-- /面包屑路径 + 全局搜索 结束 /.breadcrumbs -->
 					
 					<!-- 主页面列表部分 -->
@@ -91,38 +78,10 @@
 								        <i class="glyphicon glyphicon-refresh"></i>
 								        <span>${message("admin.common.refresh")}</span>
 								    </a>
-								    <a href="refresh.jhtml" class="btn btn-success btn-sm">
-								        <i class="glyphicon glyphicon-refresh"></i>
-								        <span>刷新内容</span>
+								    <a href="game_list2.jhtml" target="_blank" class="btn btn-success btn-sm">
+								        <span>客户查看页面</span>
 								    </a>
-								    
-								    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								    日期查询：<input type="text" id="searchDate" name="searchDate" value="[#if searchDate?? ]${(searchDate?string('yyyy-MM-dd'))!''}[/#if]" class="text Wdate" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd'});" />
-								    
 								</div>
-						
-								<!-- 列表搜索 -->
-								<div class="btn-group btn-corner pull-right">
-									<div class="btn-group">
-										<a id="searchPropertySelect" aria-expanded="false" data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
-									        <i class="ace-icon fa fa-angle-down"></i>
-									    </a>
-									    <ul id="searchPropertyOption" class="dropdown-menu dropdown-info">
-											<li [#if page.searchProperty == "gameName" ] class="active" [/#if] val="gameName" >
-												<a href="javascript:;" >游戏名称</a>
-											</li>
-											<li [#if page.searchProperty == "title" ] class="active" [/#if] val="title" >
-												<a href="javascript:;" >账号密码</a>
-											</li>
-									    </ul>
-									</div>
-									<span class="input-icon pull-left">
-								       <i class="ace-icon fa fa-search"></i>
-								       <input id="searchValue" name="searchValue" value="${page.searchValue}" type="text" class="nav-search-input input-sm input-info" placeholder="Search ..." autocomplete="off" />
-								    </span>
-								    <input type="submit" name="search" class="btn btn-info btn-sm pull-left" value="Search &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" />
-								</div>
-								
 							</div><!-- 列表工具条部分结束/.page-header -->
 							
 							<!-- 列表表格开始 -->
@@ -133,43 +92,20 @@
 										<thead>
 											<tr>
 												<th>
-													<span name="title">账号密码</span>
-												</th>
-												<th>
-													<span name="picture">游戏截图</span>
+													<span name="gameName">游戏名称</span>
 												</th>
 											</tr>
 										</thead>
 										<tbody>
-										[#list contents as gameState ]
+										[#list gameList as gameName ]
 											<tr>
 												<td>				
-													<span name="title">${(gameState.title)!}</span>
-												</td>
-												<td>
-													<table>
-													 <tr>
-														[#list gameState.pictures as obj]
-														<th>&nbsp;${(obj[1]?string("yyyy-MM-dd"))!}&nbsp;</th>
-														[/#list]													 
-													 </tr>
-													 <tr>
-														[#list gameState.pictures as obj]
-														<td>&nbsp;<img width="200px" height="200px" src="${(obj[0])!}" title="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" alt="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" />&nbsp;</td>
-														[/#list]													 
-													 </tr>
-													</table>
+													<a href="${base}/game_state/list.jhtml?gameName=${gameName!}">${gameName!}</a>
 												</td>
 											</tr>
 										[/#list]
 										</tbody>
 									</table><!-- /表格部分结束 -->
-									
-									<!-- 引入分页部分 -->
-									[@pagination pageNumber = page.pageNumber totalPages = page.totalPages]
-										[#include "/admin/include/pagination.ftl"]
-									[/@pagination]
-									
 								</div><!-- /.col -->
 							</div><!-- /.row -->
 						</form><!-- /列表表单结束 /form -->
@@ -187,11 +123,58 @@
 
 		<!-- 页面自定义插件脚本引入区 page specific plugin scripts -->
 		<script type="text/javascript" src="${base}/resources/admin/js/list.js"></script>
-		<script type="text/javascript" src="${base}/resources/admin/datePicker/WdatePicker.js"></script>
 		
 		<!-- 页面自定义内联脚本区 inline scripts related to this page -->
 		<script type="text/javascript">
 			[@flash_message /]
+			
+		[#-- list页表格单行操作按钮列的删除功能 --]
+			var $listTable = $("#listTable");
+			var $pageTotal = $("#pageTotal");
+			var $deleteButton2 = $(".deleteButton");
+			$deleteButton2.click( function() {
+				var $this = $(this);
+				if ($this.hasClass("disabled")) {
+					return false;
+				}
+				$this.addClass("disabled");
+				var $ids = $this.attr("ids");
+				$.dialog({
+					type: "warn",
+					content: message("admin.dialog.deleteConfirm"),
+					ok: message("admin.dialog.ok"),
+					cancel: message("admin.dialog.cancel"),
+					onOk: function() {
+						$.ajax({
+							url: "delete.jhtml",
+							type: "POST",
+							data: {ids:$ids},
+							dataType: "json",
+							cache: false,
+							success: function(message) {
+								$.message(message);
+								if (message.type == "success") {
+									$pageTotal.text(parseInt($pageTotal.text()) - 1);
+									$this.closest("tr").remove();
+									if ($listTable.find("tr").size() <= 1) {
+										setTimeout(function() {
+											location.reload(true);
+										}, 2000);
+									}
+								}
+								$deleteButton2.removeClass("disabled");
+							}
+						});
+					},
+					onCancel: function(){
+						$deleteButton2.removeClass("disabled");
+					},
+					onClose: function(){
+						$deleteButton2.removeClass("disabled");
+					}
+				});
+			});
+			
 		</script>
 
 	</body>

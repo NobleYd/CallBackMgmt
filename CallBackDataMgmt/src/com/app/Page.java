@@ -25,7 +25,7 @@ public class Page<T> implements Serializable {
 	private final List<T> content = new ArrayList<T>();
 
 	/** 总记录数 */
-	private final long total;
+	private long total;
 
 	/** 分页信息 */
 	private final Pageable pageable;
@@ -158,6 +158,10 @@ public class Page<T> implements Serializable {
 	 */
 	public Pageable getPageable() {
 		return pageable;
+	}
+
+	public void setTotal(long total) {
+		this.total = total;
 	}
 
 }

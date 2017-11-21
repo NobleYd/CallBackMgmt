@@ -60,11 +60,27 @@
 				</li>
 			</ul>
 		</li>
-		<li class="[#if subMenu=="gameState"]active open[/#if]">
-			<a href="${base}/game_state/list.jhtml" >
+		
+		<li class="[#if menu=="gameStateMenu"]active open[/#if]">
+			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-dashboard"></i>
-				<span class="menu-text">游戏状态</span>
+				<span class="menu-text">账户状态管理</span>
+				<b class="arrow fa fa-angle-down"></b>
 			</a>
+			<ul class="submenu">
+				<li class="[#if subMenu=="gameList"]active open[/#if]">
+					<a href="${base}/game_state/game_list.jhtml" >
+						<i class="menu-icon fa fa-dashboard"></i>
+						<span class="menu-text">游戏列表</span>
+					</a>
+				</li>
+				<li class="[#if subMenu=="gameState"]active open[/#if]">
+					<a href="${base}/game_state/list.jhtml" >
+						<i class="menu-icon fa fa-dashboard"></i>
+						<span class="menu-text">账号截图列表</span>
+					</a>
+				</li>
+			</ul>
 		</li>
 		[#--
 		[#include "/admin/include/sidebar2.ftl"]

@@ -74,17 +74,39 @@ public class GameStateController extends BaseController implements ServletContex
 	/**
 	 * 列表
 	 */
+	@RequestMapping(value = "/game_list2", method = RequestMethod.GET)
+	public String game_list2(Pageable pageable, ModelMap model) {
+		List<String> gameList = gameStateService.getGameList();
+		model.put("gameList", gameList);
+		return viewPath + "/game_list2";
+	}
+
+	/**
+	 * 列表
+	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Pageable pageable, ModelMap model) {
+	public String list(Pageable pageable, Date searchDate, String gameName, ModelMap model) {
 		pageable.setUnlimitPageSize();
 		pageable.getOrders().add(Order.asc("gameName"));
 		pageable.getOrders().add(Order.asc("title"));
 		pageable.getOrders().add(Order.asc("recordDate"));
+
+		if (gameName != null && !gameName.isEmpty()) {
+			pageable.setSearchProperty("gameName");
+			pageable.setSearchValue(gameName);
+		}
+
+		if (searchDate != null) {
+			model.put("searchDate", searchDate);
+		}
+
 		Page<GameState> page = gameStateService.findPage(pageable);
 
 		List<Map<String, Object>> contents = new ArrayList<Map<String, Object>>();
 		String lastGame = "";
 		String lastTitle = "";
+		// 为了方便实现日期搜查
+		boolean isNew = false;
 		Map<String, Object> current = new LinkedHashMap<String, Object>();
 		for (GameState gameState : page.getContent()) {
 			if (!lastGame.equals(gameState.getGameName()) || !lastTitle.equals(gameState.getTitle())) {
@@ -93,32 +115,60 @@ public class GameStateController extends BaseController implements ServletContex
 				lastGame = gameState.getGameName();
 				lastTitle = gameState.getTitle();
 				contents.add(current);
+				isNew = true;
 			}
 			current.put("gameName", gameState.getGameName());
 			current.put("title", gameState.getTitle());
 			((ArrayList) current.get("pictures"))
 					.add(new Object[] { gameState.getPicture(), gameState.getRecordDate() });
+			if (isNew) {
+				isNew = false;
+				current.put("firstDate", gameState.getRecordDate());
+			}
 		}
+		
+		if(searchDate!=null) {
+			List<Map<String, Object>> contents2 = new ArrayList<Map<String, Object>>();
+			for(Map<String, Object> m :contents) {
+				if(((Date)(m.get("firstDate"))).compareTo(searchDate)==0) {
+					contents2.add(m);
+				}
+			}
+			contents = contents2;
+		}
+		page.setTotal(contents.size());
 		model.addAttribute("contents", contents);
 		model.addAttribute("page", page);
 
 		return viewPath + "/list";
 	}
-	
+
 	/**
 	 * 列表
 	 */
 	@RequestMapping(value = "/list2", method = RequestMethod.GET)
-	public String list2(Pageable pageable, ModelMap model) {
+	public String list2(Pageable pageable, Date searchDate, String gameName, ModelMap model) {
 		pageable.setUnlimitPageSize();
 		pageable.getOrders().add(Order.asc("gameName"));
 		pageable.getOrders().add(Order.asc("title"));
 		pageable.getOrders().add(Order.asc("recordDate"));
+
+		if (gameName != null && !gameName.isEmpty()) {
+			pageable.setSearchProperty("gameName");
+			pageable.setSearchValue(gameName);
+		}
+
+		if (searchDate != null) {
+			model.put("searchDate", searchDate);
+		}
+
 		Page<GameState> page = gameStateService.findPage(pageable);
 
 		List<Map<String, Object>> contents = new ArrayList<Map<String, Object>>();
 		String lastGame = "";
 		String lastTitle = "";
+		// 为了方便实现日期搜查
+		boolean isNew = false;
 		Map<String, Object> current = new LinkedHashMap<String, Object>();
 		for (GameState gameState : page.getContent()) {
 			if (!lastGame.equals(gameState.getGameName()) || !lastTitle.equals(gameState.getTitle())) {
@@ -127,12 +177,28 @@ public class GameStateController extends BaseController implements ServletContex
 				lastGame = gameState.getGameName();
 				lastTitle = gameState.getTitle();
 				contents.add(current);
+				isNew = true;
 			}
 			current.put("gameName", gameState.getGameName());
 			current.put("title", gameState.getTitle());
 			((ArrayList) current.get("pictures"))
 					.add(new Object[] { gameState.getPicture(), gameState.getRecordDate() });
+			if (isNew) {
+				isNew = false;
+				current.put("firstDate", gameState.getRecordDate());
+			}
 		}
+		
+		if(searchDate!=null) {
+			List<Map<String, Object>> contents2 = new ArrayList<Map<String, Object>>();
+			for(Map<String, Object> m :contents) {
+				if(((Date)(m.get("firstDate"))).compareTo(searchDate)==0) {
+					contents2.add(m);
+				}
+			}
+			contents = contents2;
+		}
+		page.setTotal(contents.size());
 		model.addAttribute("contents", contents);
 		model.addAttribute("page", page);
 
