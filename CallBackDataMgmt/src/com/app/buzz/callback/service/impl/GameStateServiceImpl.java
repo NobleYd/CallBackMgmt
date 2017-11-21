@@ -38,6 +38,11 @@ public class GameStateServiceImpl extends BaseServiceImpl<GameState, Long> imple
 	public List<String> getGameList() {
 		return gameStateDao.getGameList();
 	}
+
+	@Override
+	public void deleteByGameName(String gameName) {
+		gameStateDao.deleteByGameName(gameName);
+	}
 	
 
 }

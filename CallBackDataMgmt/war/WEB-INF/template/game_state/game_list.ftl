@@ -94,6 +94,9 @@
 												<th>
 													<span name="gameName">游戏名称</span>
 												</th>
+												<th>
+													<span>操作</span>
+												</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -101,6 +104,9 @@
 											<tr>
 												<td>				
 													<a href="${base}/game_state/list.jhtml?gameName=${gameName!}">${gameName!}</a>
+												</td>
+												<td>				
+													<a href="${base}/game_state/delete_game_name.jhtml?gameName=${gameName!}">删除</a>
 												</td>
 											</tr>
 										[/#list]
@@ -127,54 +133,6 @@
 		<!-- 页面自定义内联脚本区 inline scripts related to this page -->
 		<script type="text/javascript">
 			[@flash_message /]
-			
-		[#-- list页表格单行操作按钮列的删除功能 --]
-			var $listTable = $("#listTable");
-			var $pageTotal = $("#pageTotal");
-			var $deleteButton2 = $(".deleteButton");
-			$deleteButton2.click( function() {
-				var $this = $(this);
-				if ($this.hasClass("disabled")) {
-					return false;
-				}
-				$this.addClass("disabled");
-				var $ids = $this.attr("ids");
-				$.dialog({
-					type: "warn",
-					content: message("admin.dialog.deleteConfirm"),
-					ok: message("admin.dialog.ok"),
-					cancel: message("admin.dialog.cancel"),
-					onOk: function() {
-						$.ajax({
-							url: "delete.jhtml",
-							type: "POST",
-							data: {ids:$ids},
-							dataType: "json",
-							cache: false,
-							success: function(message) {
-								$.message(message);
-								if (message.type == "success") {
-									$pageTotal.text(parseInt($pageTotal.text()) - 1);
-									$this.closest("tr").remove();
-									if ($listTable.find("tr").size() <= 1) {
-										setTimeout(function() {
-											location.reload(true);
-										}, 2000);
-									}
-								}
-								$deleteButton2.removeClass("disabled");
-							}
-						});
-					},
-					onCancel: function(){
-						$deleteButton2.removeClass("disabled");
-					},
-					onClose: function(){
-						$deleteButton2.removeClass("disabled");
-					}
-				});
-			});
-			
 		</script>
 
 	</body>

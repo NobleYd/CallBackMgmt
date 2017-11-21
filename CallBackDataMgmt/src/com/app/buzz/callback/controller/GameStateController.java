@@ -71,6 +71,53 @@ public class GameStateController extends BaseController implements ServletContex
 		return viewPath + "/game_list";
 	}
 
+	@RequestMapping(value = "/delete_game_name")
+	public String deletGameName(String gameName, RedirectAttributes redirectAttributes) {
+		if (gameName == null || gameName.isEmpty()) {
+			addFlashMessage(redirectAttributes, Message.success("删除成功！"));
+			return "redirect:game_list.jhtml";
+		}
+		// 删除记录
+		// gameStateService.deleteByGameName(gameName);
+		// 删除数据
+		File gameStateDir = new File(servletContext.getRealPath("/upload/gamestate/"));
+		if (!gameStateDir.exists() || !gameStateDir.isDirectory()) {
+			gameStateDir.mkdirs();
+			addFlashMessage(redirectAttributes, Message.success("删除成功！"));
+			return "redirect:game_list.jhtml";
+		}
+		for (File dayNumberFile : gameStateDir.listFiles()) {
+			try {
+				if (dayNumberFile.isDirectory()) {
+					for (File gameNameFile : dayNumberFile.listFiles()) {
+						if (gameName.equals(gameNameFile.getName())) {
+							deleteFilesInDirectory(gameNameFile);
+						}
+					}
+				} else {
+					// 非目录
+				}
+			} catch (Exception e) {
+			}
+		}
+		return "redirect:game_list.jhtml";
+	}
+
+	private void deleteFilesInDirectory(File directoryFile) {
+		for (File file : directoryFile.listFiles()) {
+			try {
+				if (file.isDirectory()) {
+					deleteFilesInDirectory(file);
+					file.delete();
+				} else {
+					file.delete();
+				}
+			} catch (Exception e) {
+			}
+		}
+		directoryFile.delete();
+	}
+
 	/**
 	 * 列表
 	 */
@@ -126,11 +173,11 @@ public class GameStateController extends BaseController implements ServletContex
 				current.put("firstDate", gameState.getRecordDate());
 			}
 		}
-		
-		if(searchDate!=null) {
+
+		if (searchDate != null) {
 			List<Map<String, Object>> contents2 = new ArrayList<Map<String, Object>>();
-			for(Map<String, Object> m :contents) {
-				if(((Date)(m.get("firstDate"))).compareTo(searchDate)==0) {
+			for (Map<String, Object> m : contents) {
+				if (((Date) (m.get("firstDate"))).compareTo(searchDate) == 0) {
 					contents2.add(m);
 				}
 			}
@@ -188,11 +235,11 @@ public class GameStateController extends BaseController implements ServletContex
 				current.put("firstDate", gameState.getRecordDate());
 			}
 		}
-		
-		if(searchDate!=null) {
+
+		if (searchDate != null) {
 			List<Map<String, Object>> contents2 = new ArrayList<Map<String, Object>>();
-			for(Map<String, Object> m :contents) {
-				if(((Date)(m.get("firstDate"))).compareTo(searchDate)==0) {
+			for (Map<String, Object> m : contents) {
+				if (((Date) (m.get("firstDate"))).compareTo(searchDate) == 0) {
 					contents2.add(m);
 				}
 			}

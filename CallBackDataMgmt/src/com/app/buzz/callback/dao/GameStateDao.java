@@ -20,4 +20,6 @@ import com.app.dao.BaseDao;
 public interface GameStateDao extends BaseDao<GameState, Long>{
 
 	List<String> getGameList();
+
+	void deleteByGameName(String gameName);
 }

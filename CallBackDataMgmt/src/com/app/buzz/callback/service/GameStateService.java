@@ -20,5 +20,7 @@ import com.app.service.BaseService;
 public interface GameStateService extends BaseService<GameState, Long>{
 
 	List<String> getGameList();
+
+	void deleteByGameName(String gameName);
 	
 }
