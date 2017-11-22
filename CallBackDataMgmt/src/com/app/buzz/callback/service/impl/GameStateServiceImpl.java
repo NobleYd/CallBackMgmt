@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.buzz.callback.dao.GameStateDao;
 import com.app.buzz.callback.entity.GameState;
+import com.app.buzz.callback.entity.GameStateBean;
 import com.app.buzz.callback.service.GameStateService;
 import com.app.service.impl.BaseServiceImpl;
 
@@ -43,6 +44,19 @@ public class GameStateServiceImpl extends BaseServiceImpl<GameState, Long> imple
 	public void deleteByGameName(String gameName) {
 		gameStateDao.deleteByGameName(gameName);
 	}
-	
 
+	@Override
+	public List<GameStateBean> findGameStateList() {
+		return gameStateDao.findGameStateList();
+	}
+
+	@Override
+	public List<GameStateBean> findGameStateList(String gameName) {
+		return gameStateDao.findGameStateList(gameName);
+	}
+
+	@Override
+	public List<String> findPictures(String gameName, String title) {
+		return gameStateDao.findPictures(gameName,title);
+	}
 }

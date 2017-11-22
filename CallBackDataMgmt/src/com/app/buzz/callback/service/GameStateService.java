@@ -8,6 +8,7 @@ package com.app.buzz.callback.service;
 import java.util.List;
 
 import com.app.buzz.callback.entity.GameState;
+import com.app.buzz.callback.entity.GameStateBean;
 import com.app.service.BaseService;
 
 /***
@@ -17,10 +18,16 @@ import com.app.service.BaseService;
  * @author APP TEAM
  * @version 1.0
  */
-public interface GameStateService extends BaseService<GameState, Long>{
+public interface GameStateService extends BaseService<GameState, Long> {
 
 	List<String> getGameList();
 
 	void deleteByGameName(String gameName);
-	
+
+	List<GameStateBean> findGameStateList();
+
+	List<GameStateBean> findGameStateList(String gameName);
+
+	List<String> findPictures(String gameName, String title);
+
 }

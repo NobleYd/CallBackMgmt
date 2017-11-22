@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
+import org.apache.poi.ss.formula.CollaboratingWorkbooksEnvironment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,7 @@ import com.app.Order;
 import com.app.Page;
 import com.app.Pageable;
 import com.app.buzz.callback.entity.GameState;
+import com.app.buzz.callback.entity.GameStateBean;
 import com.app.buzz.callback.service.GameStateService;
 import com.app.controller.admin.BaseController;
 import com.app.service.FileService;
@@ -133,58 +136,42 @@ public class GameStateController extends BaseController implements ServletContex
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Pageable pageable, Date searchDate, String gameName, ModelMap model) {
-		pageable.setUnlimitPageSize();
-		pageable.getOrders().add(Order.asc("gameName"));
-		pageable.getOrders().add(Order.asc("title"));
-		pageable.getOrders().add(Order.asc("recordDate"));
-
+		
 		if (gameName != null && !gameName.isEmpty()) {
 			pageable.setSearchProperty("gameName");
 			pageable.setSearchValue(gameName);
 		}
+		
+		List<GameStateBean> list;
+		
+		if ((pageable.getSearchProperty() != null && pageable.getSearchValue()!=null)) {
+			list = gameStateService.findGameStateList(pageable.getSearchValue());
+		} else {
+			list = gameStateService.findGameStateList();
+		}
+		
+		//增加日期筛选，这么做是为了简单，根据recordDate排序，因此直接根据recordDate进行过滤。
+		//gameName则在jpql中做筛选。
+		//其次，为了实现根据图片数量排序，此处将第一次查询仅仅查询了图片数量，此处遍历查询图片。
+		List<GameStateBean> list2 = new ArrayList<GameStateBean>();
+		for (GameStateBean gameStateBean : list) {
+			if (searchDate != null&&searchDate.compareTo(gameStateBean.getRecordDate())!=0) {
+				continue;
+			}
+			gameStateBean.setPictures(gameStateService.findPictures(gameStateBean.getGameName(),gameStateBean.getTitle()));
+			list2.add(gameStateBean);
+		}
 
+		pageable.setUnlimitPageSize();
+		
 		if (searchDate != null) {
 			model.put("searchDate", searchDate);
 		}
 
-		Page<GameState> page = gameStateService.findPage(pageable);
-
-		List<Map<String, Object>> contents = new ArrayList<Map<String, Object>>();
-		String lastGame = "";
-		String lastTitle = "";
-		// 为了方便实现日期搜查
-		boolean isNew = false;
-		Map<String, Object> current = new LinkedHashMap<String, Object>();
-		for (GameState gameState : page.getContent()) {
-			if (!lastGame.equals(gameState.getGameName()) || !lastTitle.equals(gameState.getTitle())) {
-				current = new LinkedHashMap<String, Object>();
-				current.put("pictures", new ArrayList<String>());
-				lastGame = gameState.getGameName();
-				lastTitle = gameState.getTitle();
-				contents.add(current);
-				isNew = true;
-			}
-			current.put("gameName", gameState.getGameName());
-			current.put("title", gameState.getTitle());
-			((ArrayList) current.get("pictures"))
-					.add(new Object[] { gameState.getPicture(), gameState.getRecordDate() });
-			if (isNew) {
-				isNew = false;
-				current.put("firstDate", gameState.getRecordDate());
-			}
-		}
-
-		if (searchDate != null) {
-			List<Map<String, Object>> contents2 = new ArrayList<Map<String, Object>>();
-			for (Map<String, Object> m : contents) {
-				if (((Date) (m.get("firstDate"))).compareTo(searchDate) == 0) {
-					contents2.add(m);
-				}
-			}
-			contents = contents2;
-		}
-		page.setTotal(contents.size());
-		model.addAttribute("contents", contents);
+		Page<GameState> page = new Page<GameState>(Collections.EMPTY_LIST, list2.size(),pageable);
+		page.setTotal(list2.size());
+		
+		model.addAttribute("contents", list2);
 		model.addAttribute("page", page);
 
 		return viewPath + "/list";
@@ -195,59 +182,44 @@ public class GameStateController extends BaseController implements ServletContex
 	 */
 	@RequestMapping(value = "/list2", method = RequestMethod.GET)
 	public String list2(Pageable pageable, Date searchDate, String gameName, ModelMap model) {
-		pageable.setUnlimitPageSize();
-		pageable.getOrders().add(Order.asc("gameName"));
-		pageable.getOrders().add(Order.asc("title"));
-		pageable.getOrders().add(Order.asc("recordDate"));
 
 		if (gameName != null && !gameName.isEmpty()) {
 			pageable.setSearchProperty("gameName");
 			pageable.setSearchValue(gameName);
 		}
+		
+		List<GameStateBean> list;
+		
+		if ((pageable.getSearchProperty() != null && pageable.getSearchValue()!=null)) {
+			list = gameStateService.findGameStateList(pageable.getSearchValue());
+		} else {
+			list = gameStateService.findGameStateList();
+		}
+		
+		//增加日期筛选，这么做是为了简单，根据recordDate排序，因此直接根据recordDate进行过滤。
+		//gameName则在jpql中做筛选。
+		//其次，为了实现根据图片数量排序，此处将第一次查询仅仅查询了图片数量，此处遍历查询图片。
+		List<GameStateBean> list2 = new ArrayList<GameStateBean>();
+		for (GameStateBean gameStateBean : list) {
+			if (searchDate != null&&searchDate.compareTo(gameStateBean.getRecordDate())!=0) {
+				continue;
+			}
+			gameStateBean.setPictures(gameStateService.findPictures(gameStateBean.getGameName(),gameStateBean.getTitle()));
+			list2.add(gameStateBean);
+		}
 
+		pageable.setUnlimitPageSize();
+		
 		if (searchDate != null) {
 			model.put("searchDate", searchDate);
 		}
 
-		Page<GameState> page = gameStateService.findPage(pageable);
-
-		List<Map<String, Object>> contents = new ArrayList<Map<String, Object>>();
-		String lastGame = "";
-		String lastTitle = "";
-		// 为了方便实现日期搜查
-		boolean isNew = false;
-		Map<String, Object> current = new LinkedHashMap<String, Object>();
-		for (GameState gameState : page.getContent()) {
-			if (!lastGame.equals(gameState.getGameName()) || !lastTitle.equals(gameState.getTitle())) {
-				current = new LinkedHashMap<String, Object>();
-				current.put("pictures", new ArrayList<String>());
-				lastGame = gameState.getGameName();
-				lastTitle = gameState.getTitle();
-				contents.add(current);
-				isNew = true;
-			}
-			current.put("gameName", gameState.getGameName());
-			current.put("title", gameState.getTitle());
-			((ArrayList) current.get("pictures"))
-					.add(new Object[] { gameState.getPicture(), gameState.getRecordDate() });
-			if (isNew) {
-				isNew = false;
-				current.put("firstDate", gameState.getRecordDate());
-			}
-		}
-
-		if (searchDate != null) {
-			List<Map<String, Object>> contents2 = new ArrayList<Map<String, Object>>();
-			for (Map<String, Object> m : contents) {
-				if (((Date) (m.get("firstDate"))).compareTo(searchDate) == 0) {
-					contents2.add(m);
-				}
-			}
-			contents = contents2;
-		}
-		page.setTotal(contents.size());
-		model.addAttribute("contents", contents);
+		Page<GameState> page = new Page<GameState>(Collections.EMPTY_LIST, list2.size(),pageable);
+		page.setTotal(list2.size());
+		
+		model.addAttribute("contents", list2);
 		model.addAttribute("page", page);
+
 
 		return viewPath + "/list2";
 	}

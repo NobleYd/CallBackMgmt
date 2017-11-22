@@ -74,6 +74,9 @@
 										<thead>
 											<tr>
 												<th>
+													<span name="index">序号</span>
+												</th>
+												<th>
 													<span name="title">账号密码</span>
 												</th>
 												<th>
@@ -85,18 +88,21 @@
 										[#list contents as gameState ]
 											<tr>
 												<td>				
+													<span name="index">${(gameState_index + 1)!}</span>
+												</td>
+												<td>				
 													<span name="title">${(gameState.title)!}</span>
 												</td>
 												<td>
 													<table>
 													 <tr>
 														[#list gameState.pictures as obj]
-														<th>&nbsp;${(obj[1]?string("yyyy-MM-dd"))!}&nbsp;</th>
+														<th>&nbsp;${(gameState.recordDate?string("yyyy-MM-dd"))!}&nbsp;</th>
 														[/#list]													 
 													 </tr>
 													 <tr>
 														[#list gameState.pictures as obj]
-														<td>&nbsp;<img width="200px" height="200px" src="${(obj[0])!}" title="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" alt="${(obj[1]?string("yyyy-MM-dd HH:mm:ss"))!}" />&nbsp;</td>
+														<td>&nbsp;<img width="200px" height="200px" src="${obj!}" title="${(gameState.recordDate?string("yyyy-MM-dd"))!}" alt="${(gameState.recordDate?string("yyyy-MM-dd"))!}" />&nbsp;</td>
 														[/#list]													 
 													 </tr>
 													</table>
