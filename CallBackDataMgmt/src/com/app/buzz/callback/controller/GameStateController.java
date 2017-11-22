@@ -78,7 +78,7 @@ public class GameStateController extends BaseController implements ServletContex
 			return "redirect:game_list.jhtml";
 		}
 		// 删除记录
-		// gameStateService.deleteByGameName(gameName);
+		gameStateService.deleteByGameName(gameName);
 		// 删除数据
 		File gameStateDir = new File(servletContext.getRealPath("/upload/gamestate/"));
 		if (!gameStateDir.exists() || !gameStateDir.isDirectory()) {
