@@ -57,7 +57,7 @@ public class GameStateDaoImpl extends BaseDaoImpl<GameState, Long> implements Ga
 		);
 		criteriaQuery.groupBy(gameState.get("gameName"), gameState.get("title"));
 		criteriaQuery.orderBy(criteriaBuilder.asc(gameState.get("gameName")), //
-				criteriaBuilder.asc(criteriaBuilder.count(gameState.get("picture"))), //
+				criteriaBuilder.desc(criteriaBuilder.count(gameState.get("picture"))), //
 				criteriaBuilder.asc(gameState.get("title")), //
 				criteriaBuilder.asc(gameState.get("recordDate"))//
 		);
@@ -78,7 +78,7 @@ public class GameStateDaoImpl extends BaseDaoImpl<GameState, Long> implements Ga
 		);
 		criteriaQuery.groupBy(gameState.get("gameName"), gameState.get("title"));
 		criteriaQuery.orderBy(criteriaBuilder.asc(gameState.get("gameName")), //gameName
-				criteriaBuilder.asc(criteriaBuilder.count(gameState.get("picture"))), //count
+				criteriaBuilder.desc(criteriaBuilder.count(gameState.get("picture"))), //count
 				criteriaBuilder.asc(gameState.get("title")), //
 				criteriaBuilder.asc(gameState.get("recordDate"))//
 		);
@@ -92,11 +92,11 @@ public class GameStateDaoImpl extends BaseDaoImpl<GameState, Long> implements Ga
 	}
 
 	@Override
-	public List<String> findPictures(String gameName, String title) {
+	public List<Object[]> findPictures(String gameName, String title) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> criteriaQuery = criteriaBuilder.createQuery(String.class);
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
 		Root<GameState> gameState = criteriaQuery.from(entityClass);
-		criteriaQuery.select(gameState.<String>get("picture"));
+		criteriaQuery.multiselect(gameState.<String>get("picture"),gameState.get("recordDate"));
 		Predicate restrictions = criteriaBuilder.conjunction();
 		restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.equal(gameState.get("gameName"), gameName));
 		restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.equal(gameState.get("title"), title));

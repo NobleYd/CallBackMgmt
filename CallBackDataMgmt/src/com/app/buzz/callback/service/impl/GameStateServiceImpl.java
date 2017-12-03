@@ -56,7 +56,7 @@ public class GameStateServiceImpl extends BaseServiceImpl<GameState, Long> imple
 	}
 
 	@Override
-	public List<String> findPictures(String gameName, String title) {
+	public List<Object[]> findPictures(String gameName, String title) {
 		return gameStateDao.findPictures(gameName,title);
 	}
 }

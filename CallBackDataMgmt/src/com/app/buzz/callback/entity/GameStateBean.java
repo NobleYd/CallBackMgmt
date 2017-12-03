@@ -13,12 +13,12 @@ public class GameStateBean {
 	private String title;
 
 	/** 图片 */
-	private List<String> pictures = new ArrayList<String>();
+	private List<Object[]> pictures = new ArrayList<Object[]>();
 	private Long count = 0L;
-	
+
 	/** 添加时间 */
 	private Date recordDate;
-	
+
 	public GameStateBean() {
 		super();
 	}
@@ -27,7 +27,7 @@ public class GameStateBean {
 		super();
 		this.gameName = gameName;
 		this.title = title;
-		this.count=count;
+		this.count = count;
 		this.recordDate = recordDate;
 	}
 
@@ -47,11 +47,11 @@ public class GameStateBean {
 		this.title = title;
 	}
 
-	public List<String> getPictures() {
+	public List<Object[]> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(List<String> pictures) {
+	public void setPictures(List<Object[]> pictures) {
 		this.pictures = pictures;
 	}
 
@@ -69,12 +69,6 @@ public class GameStateBean {
 
 	public void setCount(Long count) {
 		this.count = count;
-	}
-
-	@Override
-	public String toString() {
-		return "GameStateBean [gameName=" + gameName + ", title=" + title + ", pictures=" + pictures + ", count="
-				+ count + ", recordDate=" + recordDate + "]";
 	}
 
 }

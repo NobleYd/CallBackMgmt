@@ -28,6 +28,6 @@ public interface GameStateService extends BaseService<GameState, Long> {
 
 	List<GameStateBean> findGameStateList(String gameName);
 
-	List<String> findPictures(String gameName, String title);
+	List<Object[]> findPictures(String gameName, String title);
 
 }

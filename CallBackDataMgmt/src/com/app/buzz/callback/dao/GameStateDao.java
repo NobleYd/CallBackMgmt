@@ -29,5 +29,5 @@ public interface GameStateDao extends BaseDao<GameState, Long>{
 
 	List<GameStateBean> findGameStateList(String gameName);
 
-	List<String> findPictures(String gameName, String title);
+	List<Object[]> findPictures(String gameName, String title);
 }
